@@ -1,0 +1,125 @@
+KULLANICI FORMU
+
+SqlConnection baglanti = new SqlConnection(@"Data Source=DESKTOP-VQNFD07;Initial Catalog=okul;Integrated Security=True");
+SqlCommand komut;          
+SqlDataReader read;
+frmyeni yeni=new frmyeni(); //frmynei form isimlendirmesi
+
+            
+      
+
+public SqlDataReader kullanıcı(TextBox kullanıcıadı, TextBox şifre)
+        {
+					
+            baglanti.Open();
+            komut = new SqlCommand();
+            komut.Connection = baglanti;
+            komut.CommandText = "select *from tbl_Kullanici where kullanıcıadı='" + kullanıcıadı.Text + "' and sifre='" + şifre.Text + "'";
+            read = komut.ExecuteReader();
+            if (read.Read() == true) //truesızda oluyor 
+            {
+                MessageBox.Show("Giriş başarılı");
+                yeni.ShowDialog();  //formu açma başka yolu
+            }
+            else
+            {
+                MessageBox.Show("Kullanıcı adı veya şifre yanlış.", "Hata");
+
+            }
+            baglanti.Close();
+            return read;
+        }
+				
+				public void yenikullanıcı(TextBox adsoyad,TextBox kullanıcıadı ,TextBox şifre ,TextBox şifretekrar,TextBox cevap,GroupBox grup)
+				{
+					if(şifre.Text==şifretekrar.Text)
+					{
+						baglanti.Open();
+						komut=new SqlCommand();
+						komut.Connection=baglanti;
+						komut.CommandText="insert into tbl_kullanici values('"+adsoyad.Text+"','"+kullanacıadı.Text+"','"+şifre.Text+"','"+soru.Text+"','"+cevap.Text+"')";
+						komut.ExecuteNoneQuery();
+						baglanti.close();
+						MessageBox.Show("üye eklendi");
+						foreach(Control item in grup.Controls) if(item is TextBox) item.Text="";
+						
+					}
+					else
+					{
+						MessageBox.Show("şifreler uyuşmuyor","hata");
+					}
+
+
+			public void şifre(TextBox adsoyad,TextBox kullanıcıadı ,TextBox şifre ,TextBox şifretekrar,TextBox cevap,GroupBox grup)
+				{
+					if(şifre.Text==şifretekrar.Text)		
+					{
+							baglanti.Open();
+							komut=new SqlCommand("select * from tbl_kullanici where kullanıcıadı='"+kullanıcıadı.Text+"'",baglanti );
+							read=komut.ExecuteReader();
+							if(read.Read()==true)
+								{
+									if(soru.Text==read["soru"].ToString() && cevap.Text==read["cevap"].ToString())
+										{
+											baglanti.Close();
+											baglanti.Open();
+											komut=new SqlCommand("update tbl_kullanici set adsoyad='"+adsoyad.Text+"',şifre='"+şifre.Text+"' where kullanıcıadı='"+kullanıcıadı.Text+"'",baglanti );
+											komut.ExecuteNoneQuery();
+											baglanti.Close();	
+											MessageBox.Show("işlem başarılı");	
+											foreach(Control item in grup.Controls) if(item is TextBox) item.Text="";
+
+										}
+									else
+										{
+											MessageBox.Show("kullanıcı adı hariç diğerleri kontrol et","hata1");
+		
+										}
+									}
+								else
+								{
+								 MessageBox.Show("bilgilerini kontrol et kontrol et","hata2");	
+								}
+								baglanti.Close();
+					 }
+					else
+					{
+						MessageBox.Show("şifreler uyuşmuyor","hata3");
+					}				
+         }
+
+
+ŞİFRE YENİLEME FORMU KODLAR
+
+Kullanıcı_Formu k=new Kullanıcı_Formu();
+private void btn3_Click(object sender, EventArgs e)
+{
+	k.şifre(adsoyadtxt,kullanıcıadıtxt,şifretxt,şifretekrartxt,sorutxt,cevaptxt,groupBox2);
+	
+    
+}
+
+# ŞİFRE UNUTTUM İÇİN FORM AÇMA DİĞER KODLAR
+
+private void linkLabel1_LinkClicked(object sender, EventArgs e)
+{
+	frmşifre şifre=frmşifre();  //yukarıdakı class
+	şifre.ShowDialog();
+    
+}
+private void btn2_Click(object sender, EventArgs e) //butonu kafamdan yazdım
+{
+	k.kullanıcı(txtkullanıcı,txtsifre); //label değerleri isimleri
+	 
+}
+
+private void btn3_Click(object sender, EventArgs e) //butonu kafamdan yazdım
+{
+	k.yenikullanıcı(adsoyadtxt,kullanıcıadıtxt); //textboxlar
+
+}
+
+
+
+
+
