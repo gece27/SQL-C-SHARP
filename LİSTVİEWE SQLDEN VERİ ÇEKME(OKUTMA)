@@ -1,0 +1,22 @@
+# SQL SUNUCUYU TANITMA KODU VE FONKSİYONU
+SqlConnection baglanti = new SqlConnection(@"Data Source=DESKTOP-VQNFD07;Initial Catalog=okul;Integrated Security=True");
+        private void goster() //bunu kullanıcaz delete,update,insertte
+        {
+            listView1.Items.Clear();                                                 //SİLME İŞLEMİNDEN SONRA YENİDEN EKLENME OLMAZ!
+        baglanti.Open();
+            SqlCommand kmt = new SqlCommand("select * from sınıf1", baglanti);
+            SqlDataReader oku = kmt.ExecuteReader();
+            while (oku.Read())
+            {
+                ListViewItem ekle = new ListViewItem();
+                ekle.Text = oku["id"].ToString();
+                ekle.SubItems.Add(oku["ad"].ToString());
+                ekle.SubItems.Add(oku["soyad"].ToString());
+                ekle.SubItems.Add(oku["kitapadı"].ToString());
+                ekle.SubItems.Add(oku["spor"].ToString());
+
+                listView1.Items.Add(ekle);
+
+            }
+            baglanti.Close();
+        }
