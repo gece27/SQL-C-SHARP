@@ -1,0 +1,15 @@
+
+private void button3_Click(object sender, EventArgs e)  //EKLEME
+        {
+            baglanti.Open();
+
+            SqlCommand kmt = new SqlCommand("insert into kütüphane (kullanıcı,kitapad,yazar,fiyat)  values ('" + textBox2.Text.ToString() + "','" + textBox3.Text.ToString() + "','" + textBox4.Text.ToString() + "','" + textBox5.Text.ToString() + "')", baglanti);
+             kmt.ExecuteNonQuery();
+            baglanti.Close();
+            goster();
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            textBox5.Clear();
+        }
