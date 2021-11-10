@@ -13,3 +13,5 @@ private void button3_Click(object sender, EventArgs e)  //EKLEME
             textBox4.Clear();
             textBox5.Clear();
         }
+        
+   EKLEMEDE İD +1 İSE BU KOD GEÇER YANİ İD VE TEXTBOX1 YAZILMAZ
