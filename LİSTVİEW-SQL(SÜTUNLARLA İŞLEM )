@@ -1,0 +1,18 @@
+
+MOUSE İLE ID KISMINDAN TIKLAYIP SEÇME*TEXTBOXTA DEĞERLER GÖZÜKÜR*
+
+private void btn4_Click(object sender, EventArgs e)
+
+{
+
+        baglanti.Open();
+        SqlCommand kmt = new SqlCommand("select sum(fiyat)  as 'toplam' from sınıf1 ", baglanti);
+        SqlDataReader oku = kmt.ExecuteReader();
+        while(oku.Read())
+        {
+
+         label2.text=oku["toplam"].ToString(); //İYATLARIN TOPLAMI TOPLMA AATANDI SÜTUN GİBİ DÜŞÜN
+        }
+        baglanti.Close();
+
+}
